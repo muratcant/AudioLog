@@ -60,35 +60,17 @@ jobs:
         SPRING_DATASOURCE_PASSWORD: postgres
       continue-on-error: true
         
-    - name: Create empty coverage report if missing
-      if: always()
-      run: |
-        mkdir -p build/reports/jacoco/test
-        if [ ! -f build/reports/jacoco/test/jacocoTestReport.xml ]; then
-          cat > build/reports/jacoco/test/jacocoTestReport.xml << 'EOF'
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE report PUBLIC "-//JACOCO//DTD Report 1.1//EN" "report.dtd">
-<report name="AudioLog">
-  <sessioninfo id="no-tests" start="0" dump="0"/>
-  <counter type="INSTRUCTION" missed="0" covered="0"/>
-  <counter type="BRANCH" missed="0" covered="0"/>
-  <counter type="LINE" missed="0" covered="0"/>
-  <counter type="METHOD" missed="0" covered="0"/>
-  <counter type="CLASS" missed="0" covered="0"/>
-</report>
-EOF
-        fi
-        
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
+      uses: codecov/codecov-action@v5
       if: always()
       with:
-        files: build/reports/jacoco/test/jacocoTestReport.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
         token: ${{ secrets.CODECOV_TOKEN }}
-        verbose: true
+        
+    - name: Upload test results to Codecov
+      if: ${{ !cancelled() }}
+      uses: codecov/test-results-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         
     - name: Upload test results
       uses: actions/upload-artifact@v4
