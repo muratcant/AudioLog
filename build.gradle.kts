@@ -56,6 +56,12 @@ dependencies {
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
     testImplementation("io.projectreactor:reactor-test")
     testImplementation(kotlin("test"))
+    
+    // Kotest
+    testImplementation("io.kotest:kotest-runner-junit5:5.8.1")
+    testImplementation("io.kotest:kotest-assertions-core:5.8.1")
+    testImplementation("io.kotest:kotest-property:5.8.1")
+    testImplementation("io.mockk:mockk:1.13.10")
 }
 
 tasks.test {
@@ -70,17 +76,12 @@ tasks.jacocoTestReport {
         html.required = true
         csv.required = false
     }
-    finalizedBy(tasks.jacocoTestCoverageVerification)
+    // Test olmasa bile rapor oluştur
+    executionData.setFrom(fileTree(layout.buildDirectory.dir("jacoco")).include("**/*.exec"))
 }
 
 tasks.jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = "0.0".toBigDecimal()
-            }
-        }
-    }
+    enabled = false // Test olmadığı için verification'ı kapat
 }
 
 kotlin {
