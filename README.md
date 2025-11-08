@@ -1,5 +1,7 @@
 # AudioLog - Dinleme Günlüğü & Araştırma Defteri
 
+[![codecov](https://codecov.io/gh/muratcant/AudioLog/branch/main/graph/badge.svg)](https://codecov.io/gh/muratcant/AudioLog)
+
 Spotify dinleme geçmişini toplayan ve kişisel müzik günlüğü haline getiren uygulama.
 
 ## Teknolojiler
