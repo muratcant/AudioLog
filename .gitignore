@@ -42,3 +42,20 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Environment Variables & Secrets ###
+.env
+.env.local
+.env.*.local
+!.env.example
+application-local.properties
+application-secrets.properties
+
+### Docker ###
+docker-compose.override.yml
+
+### SSL Certificates ###
+*.p12
+*.jks
+*.keystore
+src/main/resources/keystore.p12
